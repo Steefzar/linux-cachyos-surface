@@ -1,0 +1,28 @@
+linux-cachyos-surface
+======================
+
+This repository is a fork of linux-surface/linux-surface. It exists to add a
+CachyOS kernel packaging (`pkg/linux-cachyos-surface/PKGBUILD`) on top of that
+project's patches, so the resulting kernel can be tracked and built with
+`makepkg`/pacman like any other package.
+
+Credit and thanks:
+
+  - linux-surface/linux-surface (https://github.com/linux-surface/linux-surface)
+    -- GPL-2.0. All the Microsoft Surface hardware-enablement patches this
+    kernel is built from originate here. This repo is a fork of theirs and
+    tracks their patches directly; they are the only external upstream this
+    packaging depends on.
+
+  - CachyOS/linux-cachyos (https://github.com/CachyOS/linux-cachyos) and
+    CachyOS/linux (https://github.com/CachyOS/linux) -- the CachyOS kernel
+    base (EEVDF/BORE scheduler, BBR3, LTO, and other CachyOS patches/tuning)
+    this build starts from, and the packaging conventions
+    (`pkg/linux-cachyos-surface/PKGBUILD`'s build-option scaffolding) this
+    PKGBUILD is adapted from.
+
+This packaging was set up, is maintained, and is periodically re-synced with
+Claude Code (Anthropic) assistance, at the direction of and reviewed by the
+repository owner. Commits made with Claude's help are marked accordingly:
+
+    Co-Authored-By: Claude <noreply@anthropic.com>
