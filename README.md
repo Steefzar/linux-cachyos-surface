@@ -46,9 +46,11 @@ patches) as part of your `yay` runs.
 
 *Fully manual:* `makepkg` inside `pkg/linux-cachyos-surface/` like any PKGBUILD.
 
-linux-surface (below) is the only upstream this depends on for patches — see
-[`NOTICE`](NOTICE) for full credits and how this fork's history relates to
-theirs.
+This package builds on two upstreams: the [CachyOS
+kernel](https://github.com/CachyOS/linux) provides the base (its patches ship
+pre-applied in the source tarball), and linux-surface (below) provides the
+Surface hardware patches applied on top. See [`NOTICE`](NOTICE) for full
+credits and how this fork's history relates to theirs.
 
 ---
 
