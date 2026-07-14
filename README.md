@@ -1,3 +1,31 @@
+## About this fork: `linux-cachyos-surface`
+
+This fork adds a **CachyOS kernel packaging** on top of upstream
+linux-surface — see [`pkg/linux-cachyos-surface/PKGBUILD`](pkg/linux-cachyos-surface/PKGBUILD).
+It builds whatever kernel version upstream linux-surface (below) currently
+has official patches for, as a normal Arch/CachyOS `pacman` package, instead
+of a distro kernel with the patches applied out-of-tree.
+
+**What it's for:** running a CachyOS kernel (EEVDF/BORE scheduler, LTO, BBR3,
+and CachyOS's other tuning) with Surface hardware support, kept up to date
+automatically as part of your normal system upgrades — rather than manually
+tracking/rebuilding a Surface kernel by hand.
+
+**How to use it:**
+- Easiest: use the installer at
+  [Steefzar/surface-kernel-autoupdate](https://github.com/Steefzar/surface-kernel-autoupdate),
+  which sets up a local pacman repo and auto-builds/updates this package (and
+  its sibling [`linux-cachyos-surface-latest`](https://github.com/Steefzar/linux-cachyos-surface-latest),
+  which tracks the newest CachyOS release instead of waiting for upstream
+  patches) as part of your `yay` runs.
+- Manually: `makepkg` inside `pkg/linux-cachyos-surface/` like any PKGBUILD.
+
+linux-surface (below) is the only upstream this depends on for patches — see
+[`NOTICE`](NOTICE) for full credits and how this fork's history relates to
+theirs.
+
+---
+
 # Linux Surface
 
 Linux running on the Microsoft Surface devices.
