@@ -6,6 +6,10 @@ It builds whatever kernel version upstream linux-surface (below) currently
 has official patches for, as a normal Arch/CachyOS `pacman` package, instead
 of a distro kernel with the patches applied out-of-tree.
 
+> **Want the newest CachyOS kernel instead, even before linux-surface
+> officially supports it?** Use the sibling package:
+> [`linux-cachyos-surface-latest`](https://github.com/Steefzar/linux-cachyos-surface-latest).
+
 **What it's for:** running a CachyOS kernel (EEVDF/BORE scheduler, LTO, BBR3,
 and CachyOS's other tuning) with Surface hardware support, kept up to date
 automatically as part of your normal system upgrades — rather than manually
