@@ -12,13 +12,39 @@ automatically as part of your normal system upgrades — rather than manually
 tracking/rebuilding a Surface kernel by hand.
 
 **How to use it:**
-- Easiest: use the installer at
-  [Steefzar/surface-kernel-autoupdate](https://github.com/Steefzar/surface-kernel-autoupdate),
-  which sets up a local pacman repo and auto-builds/updates this package (and
-  its sibling [`linux-cachyos-surface-latest`](https://github.com/Steefzar/linux-cachyos-surface-latest),
-  which tracks the newest CachyOS release instead of waiting for upstream
-  patches) as part of your `yay` runs.
-- Manually: `makepkg` inside `pkg/linux-cachyos-surface/` like any PKGBUILD.
+
+*Precompiled packages (easiest — no local kernel build):* builds of this
+package (and its sibling) are published as a signed pacman repository served
+from GitHub Releases. One-time setup — first trust the signing key:
+
+```sh
+curl -s https://raw.githubusercontent.com/Steefzar/linux-cachyos-surface/master/pkg/keys/surface-cachyos.asc \
+    | sudo pacman-key --add -
+sudo pacman-key --finger F43A86B2BAA715242965C241222C2A1B58F14BA7
+sudo pacman-key --lsign-key F43A86B2BAA715242965C241222C2A1B58F14BA7
+```
+
+Then add the repository to `/etc/pacman.conf`:
+
+```ini
+[surface-cachyos]
+Server = https://github.com/Steefzar/surface-kernel-autoupdate/releases/download/repo
+```
+
+And install:
+
+```sh
+sudo pacman -Syu linux-cachyos-surface linux-cachyos-surface-headers
+```
+
+*Build it yourself, auto-updated:* use the installer at
+[Steefzar/surface-kernel-autoupdate](https://github.com/Steefzar/surface-kernel-autoupdate),
+which sets up a local pacman repo and auto-builds/updates this package (and
+its sibling [`linux-cachyos-surface-latest`](https://github.com/Steefzar/linux-cachyos-surface-latest),
+which tracks the newest CachyOS release instead of waiting for upstream
+patches) as part of your `yay` runs.
+
+*Fully manual:* `makepkg` inside `pkg/linux-cachyos-surface/` like any PKGBUILD.
 
 linux-surface (below) is the only upstream this depends on for patches — see
 [`NOTICE`](NOTICE) for full credits and how this fork's history relates to
