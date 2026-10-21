@@ -176,8 +176,14 @@ fi
 pkgbase="linux-$_pkgsuffix"
 
 pkgbase="$pkgbase"
-_major=6.19
-_minor=8
+# The Surface kernel builder retargets _major, _minor, _tagrel, _surface_ver,
+# _surface_rel and pkgrel before every build, to the newest linux-surface
+# release that CachyOS also has a tarball for ("surfacetrack"), with pkgrel
+# following linux-surface's tag suffix. The values committed here are only the
+# fallback for when it cannot reach either upstream, so keep them at a known
+# good pair.
+_major=7.2
+_minor=11
 #_minorc=$((_minor+1))
 #_rcver=rc8
 pkgver=${_major}.${_minor}
@@ -215,7 +221,7 @@ _surface_ver="${pkgver}"
 
 # Upstream linux-surface packaging revision. Tracks the trailing suffix on
 # upstream tags like `arch-6.19.8-3` (https://github.com/linux-surface/linux-surface/tags)
-_surface_rel=3
+_surface_rel=1
 _surface_ref="arch-${_surface_ver}-${_surface_rel}"
 arch=('x86_64')
 url="https://github.com/Steefzar/linux-cachyos-surface"
