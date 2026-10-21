@@ -25,7 +25,7 @@
 # 'bore' - select 'Burst-Oriented Response Enhancer'
 # 'bmq' - select 'BMQ Scheduler'
 # 'hardened' - select 'BORE Scheduler hardened' ## kernel with hardened config and hardening patches with the bore scheduler
-# 'cachyos' - select 'CachyOS Default Scheduler (BORE)'
+# 'cachyos' - select 'CachyOS Default Scheduler (EEVDF)'
 # 'eevdf' - select 'EEVDF Scheduler'
 # 'rt' - select EEVDF, but includes a series of realtime patches
 # 'rt-bore' - select Burst-Oriented Response Enhancer, but includes a series of realtime patches
@@ -165,12 +165,22 @@ _is_ci_build() {
     return $?
 }
 
+# _cpusched=bore builds the BORE variant under its own name,
+# linux-cachyos-bore-surface, the way CachyOS's linux-cachyos-bore sits beside
+# linux-cachyos. Every other value keeps the default name and EEVDF.
+_sched_name=
+_sched_label=EEVDF
+if [ "$_cpusched" = "bore" ]; then
+    _sched_name=bore-
+    _sched_label=BORE
+fi
+
 if _is_lto_kernel && [ "$_use_lto_suffix" = "yes"  ]; then
-    _pkgsuffix=cachyos-surface-lto
+    _pkgsuffix=cachyos-${_sched_name}surface-lto
 elif ! _is_lto_kernel && [ "$_use_gcc_suffix" = "yes" ]; then
-    _pkgsuffix=cachyos-surface-gcc
+    _pkgsuffix=cachyos-${_sched_name}surface-gcc
 else
-    _pkgsuffix=cachyos-surface
+    _pkgsuffix=cachyos-${_sched_name}surface
 fi
 
 pkgbase="linux-$_pkgsuffix"
@@ -199,14 +209,15 @@ _tagrel=1
 
 # Top-level directory inside the CachyOS pre-patched kernel tarball, and
 # also the release tag name. The CachyOS/linux release tarball is a vanilla
-# kernel with all the cachyos base optimisations (BORE, BBR3, cachy,
-# fixes, ntsync, t2, zstd, amd-cache-optimizer, ...) pre-applied. Since
+# kernel with all the cachyos base optimisations (BBR3, cachy, fixes,
+# ntsync, t2, zstd, amd-cache-optimizer, ...) pre-applied. BORE is not in it:
+# it is a separate patch, added for _cpusched=bore below. Since
 # kernel-patches/<ver>/all/ was removed upstream for 6.18+, this is the
 # only supported way to get those base patches.
 _srcname=cachyos-${_major}.${_minor}-${_tagrel}
 #_srcname=linux-${_stable}
 #_srcname=linux-${_major}
-pkgdesc='Linux EEVDF + LTO + AutoFDO + Propeller Cachy Sauce Kernel by CachyOS with other patches and improvements.'
+pkgdesc="Linux ${_sched_label} + LTO + AutoFDO + Propeller Cachy Sauce Kernel by CachyOS with other patches and improvements."
 pkgrel=1
 _kernver="$pkgver-$pkgrel"
 _kernuname="${pkgver}-${_pkgsuffix}"
